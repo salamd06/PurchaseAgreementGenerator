@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PA Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!-- Need to add Required Fields -->
+</head>
+  <body>
+    <h1 class="container">Purchase Agreement Generator</h1>
+    </br>
+    <form class="container" action="/form" method="POST">
+        <!--Start of Buyer Information section -->
+      <div id="entireBuyerInfoSection">
+        <h3>Buyer Information</h3>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="buyer1Name" class="form-label">Name Buyer 1</label>
+            <input type="text" class="form-control" id="buyer1Name" name="buyer1Name" placeholder="Legal First and Last Name">
+          </div>
+          <div class="col">
+            <label for="buyer1Email" class="form-label">Email address for Buyer 1</label>
+            <input type="email" class="form-control" id="buyer1Email" name="buyer1Email">
+          </div>
+          <div class="col">
+            <label for="buyer1Phone" class="form-label">Phone Number for Buyer 1</label>
+            <input type="tel" class="form-control" id="buyer1Phone" name="buyer1Phone" placeholder="XXX-XXX-XXXX">
+          </div>
+        </div>
+
+        <div class="row mb-3 d-none" id="additionalBuyer">
+          <div class="col">
+            <label for="buyer2Name" class="form-label">Name Buyer 2</label>
+            <input type="text" class="form-control" id="buyer2Name" name="buyer2Name" placeholder="Legal First and Last Name">
+          </div>
+          <div class="col">
+              <label for="buyer2Email" class="form-label">Email address for Buyer 2</label>
+              <input type="email" class="form-control" id="buyer2Email" name="buyer2Email">
+          </div>
+          <div class="col">
+              <label for="buyer2Phone" class="form-label">Phone Number for Buyer 2</label>
+              <input type="tel" class="form-control" id="buyer2Phone" name="buyer2Phone">
+          </div>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Is there another buyer? </label>
+            <div class="form-check form-check-inline">
+                <input type="radio" id="radioYesAdditionalBuyer" name="additionalBuyerToggle" class="form-check-input" value="Yes" onclick="radioToggle('additionalBuyer','radioYesAdditionalBuyer')">
+                <label for="radioYesAdditionalBuyer" class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" id="radioNoAdditionalBuyer" name="additionalBuyerToggle" class="form-check-input" value="No" onclick="radioToggle('additionalBuyer','radioYesAdditionalBuyer')">
+                <label for="radioNoAdditionalBuyer" class="form-check-label">No</label>
+            </div>
+        </div>
+      </div>
+      <!--End of Buyer Information section -->
+      
+      <!--Start of Property details section -->
+      <div id="entirepropertyDetailsSection">
+        <h3>Property Details</h3>
+        <div id="offeringPropertyAddress">
+          <div class="form-group">
+            <label for="inputAddress">Address</label>
+            <input type="text" class="form-control" id="inputAddress" name="propertyAddress" placeholder="1234 Main St">
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="inputCity">City</label>
+              <input type="text" class="form-control" name="propertyCity" id="propertyCity" placeholder="Minneapolis">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputState">State</label>
+              <select id="inputState" class="form-select" name="propertyState">
+                <option selected value="MN">MN</option>
+                <!-- <option value="WI">WI</option> -->
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputZip">Zip</label>
+              <input type="text" class="form-control" id="inputZip" name="propertyZip" placeholder="55418">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="propertyCounty" class="form-label">County</label>
+            <input type="text" class="form-control" id="propertyCounty" name="propertyCounty" placeholder="Hennepin">
+          </div>
+          <div class="mb-3 col-md-2">
+            <label for="propertyYearBuilt" class="form-label">Year Built</label>
+            <input type="number" class="form-control" id="propertyYearBuilt" name="propertyYearBuilt" placeholder="2005">
+          </div>
+
+        </div>
+
+        <div class="mb-3">
+          <label for="legalDescription" class="form-label">Legal Description</label>
+          <input type="text" class="form-control" id="propertyLegalDescription" name="propertyLegalDescription" placeholder="Enter the legal description of the property">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Is there an HOA?</label>   <!-- Format These -->
+            <div class="form-check form-check-inline">
+              <input type="radio" id="radioYesHOA" name="toggleHOA" class="form-check-input" value="Yes" onclick="radioToggle('hoaDetails', 'radioYesHOA')">
+              <label for="radioYesHOA" class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="radioNoHOA" name="toggleHOA" class="form-check-input" value="No" onclick="radioToggle('hoaDetails', 'radioYesHOA')">
+              <label for="radioNoHOA" class="form-check-label">No</label>
+            </div>
+
+            <div id="hoaDetails" class="d-none row">
+              <div class="mb-3 col-md-4">
+                <label for="hoaManagerName" class="form-label">HOA Manager Name</label>
+                <input type="text" class="form-control" id="hoaManagerName" name="hoaManagerName" placeholder="Enter Manager Name">
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label for="hoaManagerPhone" class="form-label">HOA Manager Phone Number</label>
+                <input type="tel" class="form-control" id="hoaManagerPhone" name="hoaManagerPhone" placeholder="Enter Phone Number">
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      <!--End of Property details section -->
+
+        <!--Start of Offer details section -->
+        <div id="entireOfferDetailsSection">
+          <h3>Offer Details</h3>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="purchasePrice">Purchase Price $</label>
+              <input type="number" class="form-control" id="purchasePrice" placeholder="425000" name="purchasePrice">
+            </div>
+            <div class="col">
+              <label for="earnestMoney">Earnest Money $</label>
+              <input type="number" class="form-control" id="earnestMoney" placeholder="3000" name="earnestMoney">
+            </div>
+            <div class="mb-3 col-md-2" >
+              <label for="closeDate">Close Date</label>
+              <input type="date" class="form-control" id="closeDate" name="closeDate"> 
+              <!-- Make sure no saturday or sundays can be chosen -->
+            </div>
+          </div>
+
+
+            <!-- make sure the CIC addendum gets added if checked yes -->
+          <div class="mb-3 row">
+              <div class="col">
+              <label class="form-label">Who keeps Earnest Money if it doesn't close?</label>
+              <div class="form-check form-check-inline">
+                  <input type="radio" id="writtenStatementEarnestMoneyYes" name="writtenStatementEarnestMoney" class="form-check-input" value="Seller">
+                  <label for="writtenStatementEarnestMoneyYes" class="form-check-label">Seller</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                  <input type="radio" id="writtenStatementEarnestMoneyNo" name="writtenStatementEarnestMoney" class="form-check-input" value="Buyer">
+                  <label for="writtenStatementEarnestMoneyNo" class="form-check-label">Buyer</label>
+                </div>  
+            </div>
+          </div>
+          <div class="row">
+          <div class="mb-3 col">
+            <label class="form-label">Is the seller contributing to buyer's closing costs?</label>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="radioYesSellerContribution" name="toggleSellerContribution" class="form-check-input" value="Yes" onclick="radioToggle('sellerContributionSection', 'radioYesSellerContribution')">
+              <label for="radioYesSellerContribution" class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="radioNoSellerContribution" name="toggleSellerContribution" class="form-check-input" value="No" onclick="radioToggle('sellerContributionSection', 'radioYesSellerContribution')">
+              <label for="radioNoSellerContribution" class="form-check-label">No</label>
+            </div>
+          </div>
+
+            <div id="sellerContributionSection" class="d-none col">
+            <div class="row align-items-end">
+              <div class="col-md-3">
+              <label for="contributionType" class="form-label">Seller Contribution: </label>
+              </div>
+              <div class="col-md-2">
+              <select id="sellerContributionType"  name="sellerContributionType" class="form-select">
+                <option selected value="$">$</option>
+                <option value="%">%</option>
+              </select>
+              </div>
+              <div class="col-md-4">
+              <input type="number" class="form-control" id="sellerContributionAmount" name="sellerContributionAmount" placeholder="Enter amount">
+              </div>
+            </div>
+            </div>
+          </div>
+
+        <div class="mb-3">
+          <label class="form-label">Will a Home Warranty be part of the purchase agreement?</label>
+          <div class="form-check form-check-inline">
+            <input type="radio" id="radioYesHomeWarranty" name="toggleHomeWarranty" class="form-check-input" value="Yes" onclick="radioToggle('homeWarrantyDetails', 'radioYesHomeWarranty')">
+            <label for="radioYesHomeWarranty" class="form-check-label">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" id="radioNoHomeWarranty" name="toggleHomeWarranty" class="form-check-input" value="No" onclick="radioToggle('homeWarrantyDetails', 'radioYesHomeWarranty')">
+            <label for="radioNoHomeWarranty" class="form-check-label">No</label>
+          </div>
+        </div>
+        
+          <div id="homeWarrantyDetails" class="d-none row">
+            <div class="mb-3  col">
+              <label class="form-label">Who will pay for the Home Warranty?</label>
+              <div class="form-check form-check-inline">
+                <input type="radio" id="radioBuyerPaysWarranty" name="homeWarrantyPaidBy" class="form-check-input" value="Buyer">
+                <label for="radioBuyerPaysWarranty" class="form-check-label">Buyer</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" id="radioSellerPaysWarranty" name="homeWarrantyPaidBy" class="form-check-input" value="Seller">
+                <label for="radioSellerPaysWarranty" class="form-check-label">Seller</label>
+              </div>
+            </div>
+  
+            <div class="mb-3 col">
+              <label class="form-label">Obtained By?</label>
+              <div class="form-check form-check-inline">
+                <input type="radio" id="radioBuyerObtainsWarranty" name="homeWarrantyObtainedBy" class="form-check-input"  value="Buyer" checked="checked">
+                <label for="radioBuyerObtainsWarranty" class="form-check-label">Buyer</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" id="radioSellerObtainsWarranty" name="homeWarrantyObtainedBy" class="form-check-input" value="Seller">
+                <label for="radioSellerObtainsWarranty" class="form-check-label">Seller</label>
+              </div>
+            </div>
+            
+            <div class='row'>
+              <div class="mb-3 col-md-4">
+                <label for="homeWarrantyCompany" class="form-label">Home Warranty Company Name</label>
+                <input type="text" class="form-control" id="homeWarrantyCompany" name="homeWarrantyCompany" placeholder="Home Warranty Company Name">
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="homeWarrantyAmount" class="form-label">Up to Amount $</label>
+                <input type="number" class="form-control" id="homeWarrantyAmount" name="homeWarrantyAmount" placeholder="500">
+              </div>
+            </div>
+          </div>
+            
+          <div class="mb-3">
+            <label class="form-label">Is the seller a foreign person?</label>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="radioYesForeignSeller" name="isSellerAForeignPerson" class="form-check-input" value="Yes">
+              <label for="radioYesForeignSeller" class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="radioNoForeignSeller" name="isSellerAForeignPerson" class="form-check-input" value="No">
+              <label for="radioNoForeignSeller" class="form-check-label">No</label>
+            </div>
+          </div>
+          
+        </div>
+        <!-- End of offer details section -->
+
+        <!-- Start of Financing Details section -->
+        <div id="entireFinancingDetailsSection">
+          <h3>Financing Details</h3>
+          <div class="mb-3 col-md-4">
+              <label for="financingType">Financing Type</label>
+              <select id="financingType" name="financingType" class="form-select">
+                <option selected value="100% Cash">100% Cash</option>
+                <option value="Conventional">Conventional</option>
+                <option value="FHA">FHA</option>
+                <option value="VA">VA</option>
+                <option value="USDA">USDA</option>
+                <!-- <option value="Assuming Seller's Loan">Assuming Seller's Loan</option>
+                <option value="CD">Contract for Deed</option> -->
+              </select>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-md-4 d-none" id="downPaymentSection">
+              <label for="downPaymentPercentage">Down Payment %</label>
+              <input type="number" class="form-control" id="downPaymentPercentage" name="downPaymentPercentage"> 
+            </div>
+
+            <div class="mb-3 col-md-4 d-none" id="maxInterestRateSection">
+              <label for="maxInterestRate">Maximum Interest Rate %</label>
+                <input type="number" class="form-control" id="maxInterestRate" name="maxInterestRate" step="0.125"> 
+            </div>
+
+            <div class="mb-3 col-md-4 d-none" id="lenderProcessingFeeSection">
+              <label for="lenderProcessingFee">Seller Paid Lender Processing Fee $</label>
+              <input type="number" class="form-control" id="sellerPaidLenderProcessingFee" name="sellerPaidLenderProcessingFee" value=0> 
+            </div>
+
+          </div>
+
+          <div class="row d-none" id="vaFundingFeeSection">
+            <div class="mb-3 col-md-4">
+              <label for="vaFundingFee">VA Funding Fee $</label>
+              <input type="number" class="form-control" id="vaFundingFee" name="vaFundingFee"> 
+            </div>
+
+            <div class="mb-3 col-md-4" id="vaFundingFeePaidBy">
+              <label class="form-label">Paid for by?</label>
+              <div class="form-check form-check-inline">
+                <input type="radio" id="radioPaidByBuyer" name="vaFundingFeePaidBy" class="form-check-input" value="Buyer" onclick="radioToggle('vaFundingFeePaidatClosingOrAddedToMortgage', 'radioPaidByBuyer')">
+                <label for="radioPaidByBuyer" class="form-check-label">Buyer</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" id="radioPaidBySeller" name="vaFundingFeePaidBy" class="form-check-input" value="Seller" onclick="radioToggle('vaFundingFeePaidatClosingOrAddedToMortgage', 'radioPaidByBuyer')">
+                <label for="radioPaidBySeller" class="form-check-label">Seller</label>
+              </div>
+            </div>
+
+            <div class="mb-3 col-md-4 d-none" id="vaFundingFeePaidatClosingOrAddedToMortgage">
+              <label class="form-label">Paid When?</label>
+              <div class="form-check form-check-inline">
+                <input type="radio" id="radioPaidAtClosing" name="vaFundingFeeAddedWhere" class="form-check-input" value="At Closing">
+                <label for="radioPaidAtClosing" class="form-check-label">At Closing</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input type="radio" id="radioAddedToMortgage" name="vaFundingFeeAddedWhere" class="form-check-input" value="Added to Mortgage">
+                <label for="radioAddedToMortgage" class="form-check-label">Added to Mortgage</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row d-none" id="mortgageContingencySection">
+            <div class="mb-3 col-md-4">
+                <label class="form-label">Contingent on Financing?</label>
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="radioYesFinancingContingency" name="toggleFinanceContingency" class="form-check-input" value="Yes">
+                    <label for="radioYesFinancingContingency" class="form-check-label">Yes</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input type="radio" id="radioNoFinancingContingency" name="toggleFinanceContingency" class="form-check-input" value="No">
+                    <label for="radioNoFinancingContingency" class="form-check-label">No</label>
+                </div>
+
+            </div>
+
+            <div class="mb-3 col-md-4">
+              <label class="form-label">Is there a Second Loan? </label>
+              <div class="form-check form-check-inline">
+                  <input type="radio" id="radioYesSecondMortgage" name="toggleSecondMortgage" class="form-check-input" value="Yes">
+                  <label for="radioYesSecondMortgage" class="form-check-label" value="Yes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <input type="radio" id="radioNoSecondMortgage" name="toggleSecondMortgage" class="form-check-input" checked="checked" value="No">
+                  <label for="radioNoSecondMortgage" class="form-check-label">No</label>
+              </div>
+            </div>
+          
+        </div>
+          
+            <div class="row" id="writtenStatementDetailsSection">
+              <div class="d-none col-md-4" id="writtenStatementRequiredRadio">
+                <div class="mb-3">
+                <label class="form-label">Written Statement Required? </label>
+                <div class="form-check form-check-inline">
+                  <input type="radio" id="radioYesWrittenStatement" name="toggleWrittenStatement" class="form-check-input" value="Yes" onclick="radioToggle('writtenStatementBlock','radioYesWrittenStatement')">
+                  <label for="radioYesWrittenStatement" class="form-check-label">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" id="radioNoWrittenStatement" name="toggleWrittenStatement" class="form-check-input" checked="checked" value="No" onclick="radioToggle('writtenStatementBlock','radioYesWrittenStatement')">
+                  <label for="radioNoWrittenStatement" class="form-check-label">No</label>
+                </div>
+                </div>
+              </div>
+
+              <div id="writtenStatementBlock" class="d-none col-md-2">
+                <div class="mb-3">
+                <label for="writtenStatementDate">Written Statement Date</label>
+                <input type="date" class="form-control" id="writtenStatementDate">
+                </div>
+              </div>
+            </div>
+
+          </div>
+    <!-- End of Financing Details section -->
+    
+    <!-- Start of Contingency Details section -->
+    <div id="entireContingencyDetailsSection">
+    <h3>Contingencies</h3>
+
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label class="form-label">Contingent on Inspection?</label>
+          <div class="form-check form-check-inline">
+            <input type="radio" id="radioYesInspection" name="toggleContingentOnInspection" class="form-check-input" value="Yes" onclick="radioToggle('inspectionPeriodSection', 'radioYesInspection'); radioToggle('getInspectionAnywaysSection', 'radioNoInspection', true)">
+            <label for="radioYesInspection" class="form-check-label">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" id="radioNoInspection" name="toggleContingentOnInspection" class="form-check-input" value="No" onclick="radioToggle('inspectionPeriodSection', 'radioYesInspection'); radioToggle('getInspectionAnywaysSection', 'radioNoInspection', true)">
+            <label for="radioNoInspection" class="form-check-label">No</label>
+          </div>
+        </div>
+
+        <div id="getInspectionAnywaysSection" class="d-none col-md-4">
+          <label class="form-label">Get an inspection anyways?</label>
+          <div class="form-check form-check-inline">
+            <input type="radio" id="radioYesGetInspection" name="toggleGetInspection" class="form-check-input" value="Yes" onclick="radioToggle('inspectionPeriodSection', 'radioYesGetInspection'); radioToggle('getInspectionAnywaysSection', 'radioNoInspection', true)">
+            <label for="radioYesGetInspection" class="form-check-label">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" id="radioNoGetInspection" name="toggleGetInspection" class="form-check-input" value="No" onclick="radioToggle('inspectionPeriodSection', 'radioYesInspection', false); radioToggle('getInspectionAnywaysSection', 'radioNoInspection', true)">
+            <label for="radioNoGetInspection" class="form-check-label">No</label>
+          </div>
+        </div>
+      
+      </div>
+    
+    <div id="inspectionPeriodSection" class="d-none col-md-2">
+      <div class="mb-3">
+        <label class="form-label">Inspection Period (days)</label>
+        <input type="number" class="form-control" id="inspectionPeriod" value="7">
+      </div>
+    </div>
+    
+  
+  
+  <div class="row">
+    <div class="mb-3 col-md-4">
+      <label class="form-label">Is this contingent on the sale of another property?</label>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioYesContingentSale" name="contingentOnBuyersProperty" class="form-check-input"  value="Yes" onclick="radioToggle('isThereAPaOnHome', 'radioYesContingentSale'); radioToggle('contingentSaleDetails', 'radioYesContingentSale')">
+        <label for="radioYesContingentSale" class="form-check-label">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioNoContingentSale" name="contingentOnBuyersProperty" class="form-check-input" value="No" onclick="radioToggle('isThereAPaOnHome', 'radioYesContingentSale'); radioToggle('contingentSaleDetails', 'radioYesContingentSale')">
+        <label for="radioNoContingentSale" class="form-check-label">No</label>
+      </div>
+    </div>
+    <div class="mb-3 col-md-4 d-none" id="isThereAPaOnHome">
+      <label class="form-label">Is there already a purchase agreement on the home?</label>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioYesPurchaseAgreement" name="togglePurchaseAgreementOnContingentHome" class="form-check-input"  value="Yes" onclick="radioToggle('contingentHomeScheduledCloseDate', 'radioYesPurchaseAgreement')">
+        <label for="radioYesPurchaseAgreement" class="form-check-label">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioNoPurchaseAgreement" name="togglePurchaseAgreementOnContingentHome" class="form-check-input"  value="No" onclick="radioToggle('contingentHomeScheduledCloseDate', 'radioYesPurchaseAgreement')">
+        <label for="radioNoPurchaseAgreement" class="form-check-label">No</label>
+      </div>
+    </div>
+    <div id="contingentHomeScheduledCloseDate" class="d-none col-md-4">
+      <label for="scheduledCloseDateOnContingentHome" class="form-label">Scheduled Close Date</label>
+      <input type="date" class="form-control" id="scheduledCloseDateOnContingentHome" name="scheduledCloseDateOnContingentHome">
+    </div>
+  </div>
+
+  <div id="contingentSaleDetails" class="d-none">
+    <div id="contingentPropertyAddress">
+      <div class="form-group">
+        <label for="inputContingentAddress">Address</label>
+        <input type="text" class="form-control" id="inputContingentAddress" name="inputContingentAddress" placeholder="1234 Main St">
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="inputContingentCity">City</label>
+          <input type="text" class="form-control" id="inputContingentCity" name="inputContingentCity">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputContingentState">State</label>
+          <select id="inputContingentState" class="form-select" name="inputContingentState">
+            <option value="AL">AL</option>
+            <option value="AK">AK</option>
+            <option value="AZ">AZ</option>
+            <option value="AR">AR</option>
+            <option value="CA">CA</option>
+            <option value="CO">CO</option>
+            <option value="CT">CT</option>
+            <option value="DE">DE</option>
+            <option value="FL">FL</option>
+            <option value="GA">GA</option>
+            <option value="HI">HI</option>
+            <option value="ID">ID</option>
+            <option value="IL">IL</option>
+            <option value="IN">IN</option>
+            <option value="IA">IA</option>
+            <option value="KS">KS</option>
+            <option value="KY">KY</option>
+            <option value="LA">LA</option>
+            <option value="ME">ME</option>
+            <option value="MD">MD</option>
+            <option value="MA">MA</option>
+            <option value="MI">MI</option>
+            <option selected value="MN">MN</option>
+            <option value="MS">MS</option>
+            <option value="MO">MO</option>
+            <option value="MT">MT</option>
+            <option value="NE">NE</option>
+            <option value="NV">NV</option>
+            <option value="NH">NH</option>
+            <option value="NJ">NJ</option>
+            <option value="NM">NM</option>
+            <option value="NY">NY</option>
+            <option value="NC">NC</option>
+            <option value="ND">ND</option>
+            <option value="OH">OH</option>
+            <option value="OK">OK</option>
+            <option value="OR">OR</option>
+            <option value="PA">PA</option>
+            <option value="RI">RI</option>
+            <option value="SC">SC</option>
+            <option value="SD">SD</option>
+            <option value="TN">TN</option>
+            <option value="TX">TX</option>
+            <option value="UT">UT</option>
+            <option value="VT">VT</option>
+            <option value="VA">VA</option>
+            <option value="WA">WA</option>
+            <option value="WV">WV</option>
+            <option value="WI">WI</option>
+            <option value="WY">WY</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputContingentZip">Zip</label>
+          <input type="text" class="form-control" id="inputContingentZip">
+      </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Is there a well and/or septic system?</label>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioWell" name="toggleWellSeptic" class="form-check-input" value="Well" 
+        onclick=
+        "radioToggle('wellSepticInspectionSection', 'radioWell');
+        radioToggle('radioWellInspectionOption', 'radioWell');
+        if (!document.getElementById('radioSepticInspectionOption').classList.contains('d-none')) {
+          document.getElementById('radioSepticInspectionOption').classList.add('d-none');
+        };
+        if (!document.getElementById('radioWellAndSepticInspectionOption').classList.contains('d-none')) {
+          document.getElementById('radioWellAndSepticInspectionOption').classList.add('d-none');
+        };">
+        <label for="radioWell" class="form-check-label">Well</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioSeptic" name="toggleWellSeptic" class="form-check-input" value="Septic" 
+        onclick=
+        "radioToggle('wellSepticInspectionSection', 'radioSeptic'); 
+        radioToggle('radioSepticInspectionOption', 'radioSeptic');
+        if (!document.getElementById('radioWellInspectionOption').classList.contains('d-none')) {
+          document.getElementById('radioWellInspectionOption').classList.add('d-none');
+        };
+        if (!document.getElementById('radioWellAndSepticInspectionOption').classList.contains('d-none')) {
+          document.getElementById('radioWellAndSepticInspectionOption').classList.add('d-none');
+        };">
+        <label for="radioSeptic" class="form-check-label">Septic</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioBoth" name="toggleWellSeptic" class="form-check-input" value="Both" 
+        onclick=
+        "radioToggle('wellSepticInspectionSection', 'radioBoth'); 
+        radioToggle('radioSepticInspectionOption', 'radioBoth'); 
+        radioToggle('radioWellAndSepticInspectionOption', 'radioBoth'); 
+        radioToggle('radioWellInspectionOption', 'radioBoth')">
+        <label for="radioBoth" class="form-check-label">Both</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioNone" name="toggleWellSeptic" class="form-check-input" checked="checked" value="Neither" 
+        onclick=
+        "radioToggle('wellSepticInspectionSection', 'radioWell'); 
+        radioToggle('wellSepticInspectionSection', 'radioSeptic'); 
+        radioToggle('wellSepticInspectionSection', 'radioBoth'); 
+        radioToggle('radioWellInspectionOption','radioWell'); 
+        radioToggle('radioSepticInspectionOption','radioSeptic');
+        radioToggle('radioSepticInspectionOption','radioBoth');">
+        <label for="radioNone" class="form-check-label">Neither</label>
+      </div>
+    </div>
+
+    <div id="wellSepticInspectionSection" class="d-none">
+      <div class="mb-3">
+        <label class="form-label">Inspection Required?</label>
+        <div class="form-check form-check-inline d-none" id="radioSepticInspectionOption">
+          <input type="radio" id="radioSepticInspectionRequired" name="toggleWellAndSepticInspectionRequired" class="form-check-input" value="Septic Only" onclick="radioToggle('inspectionDetailsSection', 'radioSepticInspectionRequired');">
+          <label for="radioSepticInspectionRequired" class="form-check-label">Septic Inspection</label>
+        </div>
+        <div class="form-check form-check-inline d-none" id="radioWellInspectionOption">
+          <input type="radio" id="radioWellInspectionRequired" name="toggleWellAndSepticInspectionRequired" class="form-check-input" value="Well Only" onclick="radioToggle('inspectionDetailsSection', 'radioWellInspectionRequired'); radioToggle('radioWellInspectionOption', 'radioWellInspectionRequired')">
+          <label for="radioWellInspectionRequired" class="form-check-label">Well Inspection</label>
+        </div>
+        <div class="form-check form-check-inline d-none" id="radioWellAndSepticInspectionOption">
+          <input type="radio" id="radioWellAndSepticInspectionRequired" name="toggleWellAndSepticInspectionRequired" class="form-check-input" value="Both" onclick="radioToggle('inspectionDetailsSection', 'radioWellAndSepticInspectionRequired')">
+          <label for="radioWellAndSepticInspectionRequired" class="form-check-label">Inspect Both</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" id="radioNoInspectionRequired" name="toggleWellAndSepticInspectionRequired" class="form-check-input" value="No" onclick="radioToggle('inspectionDetailsSection', 'radioWellInspectionRequired'); radioToggle('inspectionDetailsSection', 'radioSepticInspectionRequired');radioToggle('inspectionDetailsSection', 'radioWellAndSepticInspectionRequired')">
+          <label for="radioNoInspectionRequired" class="form-check-label">No</label>
+        </div>
+      </div>
+
+      <div id="inspectionDetailsSection" class="d-none">
+        <div class="mb-3">
+          <label class="form-label">Paid for By?</label>
+          <div class="form-check form-check-inline">
+            <input type="radio" id="radioBuyerPaysInspection" name="wellAndSepticInspectionPaidBy" class="form-check-input" value="Buyer">
+            <label for="radioBuyerPaysInspection" class="form-check-label">Buyer</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" id="radioSellerPaysInspection" name="wellAndSepticInspectionPaidBy" class="form-check-input" value="Seller">
+            <label for="radioSellerPaysInspection" class="form-check-label">Seller</label>
+          </div>
+        </div>
+
+        <div class="mb-3 col-md-2">
+          <label for="inspectionPeriodDays" class="form-label">Inspection Period (days)</label>
+          <input type="number" class="form-control" id="inspectionPeriodDays" name="inspectionPeriodDays" placeholder="7">
+        </div>
+      </div>
+
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Is the home connected to city water or city sewer?</label>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioCityWaterOnly" name="toggleCityWaterSewer" class="form-check-input" value="City Water Only">
+        <label for="radioCityWaterOnly" class="form-check-label">City Water Only</label>
+            </div>
+            <div class="form-check form-check-inline">
+        <input type="radio" id="radioCitySewerOnly" name="toggleCityWaterSewer" class="form-check-input" value="City Sewer Only">
+        <label for="radioCitySewerOnly" class="form-check-label">City Sewer Only</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioBothCityWaterSewer" name="toggleCityWaterSewer" class="form-check-input" checked="checked" value="Both">
+        <label for="radioBothCityWaterSewer" class="form-check-label">Both</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioNeitherCityWaterSewer" name="toggleCityWaterSewer" class="form-check-input" value="Neither">
+        <label for="radioNeitherCityWaterSewer" class="form-check-label">Neither</label>
+      </div>
+    </div>
+
+    <div id="wellSection" style="display: none">
+      <div class="mb-3">
+        <label class="form-label">Add Well and Septic contingency?</label>
+        <div class="form-check form-check-inline">
+          <input type="radio" id="radioYesWellContingency" name="toggleWellContingency" class="form-check-input" value="Yes">
+          <label for="radioYesWellContingency" class="form-check-label">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" id="radioNoWellContingency" name="toggleWellContingency" class="form-check-input" value="No">
+          <label for="radioNoWellContingency" class="form-check-label">No</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3 d-none" id="leadPaintInspectionSection">
+      <label class="form-label">Inspect Property for Lead Paint?</label> 
+        <div class="form-check form-check-inline">
+          <input type="radio" id="radioYesLeadPaintInspection" name="radioLeadPaintInspection" class="form-check-input" value="Yes" onclick="radioToggle('leadPaintInspectionPeriodSection', 'radioYesLeadPaintInspection')">
+          <label for="radioYesLeadPaintInspection" class="form-check-label">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" id="radioNoLeadPaintInspection" name="radioLeadPaintInspection" class="form-check-input" value="No" onclick="radioToggle('leadPaintInspectionPeriodSection', 'radioYesLeadPaintInspection')">
+          <label for="radioNoLeadPaintInspection" class="form-check-label">No</label>
+        </div>
+        <div id="leadPaintInspectionPeriodSection" class="col-md-2">
+          <label for="leadPaintInspectionPeriod" class="form-label">Inspection Period (days)</label> 
+          <input type="number" class="form-control" id="leadPaintInspectionPeriod" name="leadPaintInspectionPeriod" placeholder="7">
+        </div>
+      </div>
+
+    <div class="mb-3">
+    <label for="otherOfferRemarks" class="form-label">Other Offer Remarks Section</label>
+    <button type="button" class="btn-sm btn-secondary mb-3" id="addClauseButton" data-bs-toggle="modal" data-bs-target="#clauseModal">+ Add Clause</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="clauseModal" tabindex="-1" aria-labelledby="clauseModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="clauseModalLabel">Add Clauses</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#clauseModal"></button>
+        </div>
+        <div class="modal-body">
+        <form id="clauseForm">
+          <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Buyer guarantees to cover in cash up to $_____ over the appraised value should the property not appraise at or above the contract purchase price." id="appraisalGuarantee">
+          <label class="form-check-label" for="appraisalGuarantee">Appraisal Guarantee</label>
+          </div>
+          <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Buyer(s)' 'net' offer shall be $____ higher than the next highest 'net' offer, up to a maximum 'gross' purchase price of $____. The 'net' purchase price shall be calculated from line 38 on page 1 of the purchase agreement less any Seller Paid Closing Costs. Seller to provide buyer a copy of the highest competing offer to confirm the net sales price, as well as the signature page. Upon acceptance, buyer and seller will sign a counter offer addendum noting the change in price." id="escalationClause">
+          <label class="form-check-label" for="escalationClause">Escalation Clause</label>
+          </div>
+          <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Offer Deadline: Offer expires on (date) at (time)." id="offerDeadline">
+          <label class="form-check-label" for="offerDeadline">Offer Deadline</label>
+          </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn-sm btn-primary" id="submitClauses" data-bs-dismiss="modal">Add Clauses</button>
+        </div>
+      </div>
+      </div>
+    </div>
+    
+    <textarea class="form-control" id="otherOfferRemarks" name="otherOfferRemarks" rows="9" maxlength="800" style="position:relative;" placeholder="Enter any additional remarks or clauses to be added the offer"></textarea>
+    <small class="form-text text-muted">Maximum 800 characters.</small>
+  </div>
+    <!-- End of Contingency Details section -->
+
+    <!-- Start of Realtor Details section -->
+  <div id="entireAgencyDetailsSection">
+    <h3>Agency Details</h3>
+    <div class="mb-3">
+      <label class="form-label">Is the property listed by a broker?</label>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioYesListedByBroker" name="toggleListedByBroker" class="form-check-input" value="Yes" onclick="radioToggle('listingAgentDetails', 'radioYesListedByBroker')">
+        <label for="radioYesListedByBroker" class="form-check-label">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioNoListedByBroker" name="toggleListedByBroker" class="form-check-input" value="No" onclick="radioToggle('listingAgentDetails', 'radioYesListedByBroker')">
+        <label for="radioNoListedByBroker" class="form-check-label">No</label>
+      </div>
+    </div>
+
+    <div id="listingAgentDetails" class="d-none">
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="listingAgentName" class="form-label">Listing Agent Name</label>
+        <input type="text" class="form-control" id="listingAgentName" name="listingAgentName">
+      </div>
+      <div class="col-md-4">
+        <label for="listingAgentCompany" class="form-label">Listing Agent Company</label>
+        <input type="text" class="form-control" id="listingAgentCompany" name="listingAgentCompany">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="listingAgentEmail" class="form-label">Listing Agent Email</label>
+        <input type="email" class="form-control" id="listingAgentEmail" name="listingAgentEmail">
+      </div>
+      <div class="col-md-4">
+        <label for="listingAgentPhoneNumber" class="form-label">Listing Agent Phone Number</label>
+        <input type="tel" class="form-control" id="listingAgentPhoneNumber" name="listingAgentPhone">
+      </div>
+    </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Are you represented by a buyer's agent?</label>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioYesBuyersAgent" name="toggleBuyersAgent" class="form-check-input" value="Yes" onclick="radioToggle('buyersAgentDetails', 'radioYesBuyersAgent')">
+        <label for="radioYesBuyersAgent" class="form-check-label">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="radioNoBuyersAgent" name="toggleBuyersAgent" class="form-check-input" value="No" onclick="radioToggle('buyersAgentDetails', 'radioYesBuyersAgent')">
+        <label for="radioNoBuyersAgent" class="form-check-label">No</label>
+      </div>
+    </div>
+
+    <div id="buyersAgentDetails" class="d-none">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="buyerAgentName" class="form-label">Buyer's Agent Name</label>
+          <input type="text" class="form-control" id="buyerAgentName" name="buyerAgentName" value="Daniel Salamone">
+        </div>
+        <div class="col-md-4">
+          <label for="buyerAgentCompany" class="form-label">Buyer's Agent Company</label>
+          <input type="text" class="form-control" id="buyerAgentCompany" name="buyerAgentCompany" value="LPT Realty">
+        </div>
+        <div class="col-md-4">
+          <label for="buyerAgentAgencyType" class="form-label">Agency Type</label>
+          <select id="buyerAgentAgencyType" name="buyerAgentAgencyType" class="form-select">
+            <option selected value="Buyer's Agent">Buyer's Agent</option>
+            <option value="Facilitator">Facilitator</option>
+            <option value="Dual Agent">Dual Agent</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="buyersAgentEmail" class="form-label">Buyer's Agent Email</label>
+          <input type="email" class="form-control" id="buyersAgentEmail"  name="buyerAgentEmail" value="dan@danSalamoneRealtor.com">
+        </div>
+        <div class="col-md-4">
+          <label for="buyersAgentPhoneNumber" class="form-label">Buyer's Agent Phone Number</label>
+          <input type="tel" class="form-control" id="buyersAgentPhoneNumber"  name="buyerAgentPhone" value="612-404-9708">
+        </div>
+      </div>
+
+      <div id="buyerAgentCommissionSection">
+        <div class="row align-items-end">
+          <div class="col-md-2">
+            <label for="buyerAgentCommissionType" class="form-label">Buyer Agent Commission: </label>
+          </div>
+          <div class="col-md-1">
+            <select id="buyerAgentCommissionType" class="form-select" name="buyerAgentCommissionType">
+              <option selected value="%">%</option>
+              <option value="$">$</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <input type="number" class="form-control" id="buyerAgentCommission"  name="buyerAgentCommission" placeholder="Enter amount" value="3" step="0.1">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- End of Agency Details section -->
+
+    <!-- Start of Addendums Details section -->
+
+    <!-- End of Addendums Details section -->
+    
+    <br><br>
+    
+    <button type="submit" class="btn btn-secondary">Submit</button>
+  </form>
+  <br><br>
+    
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      // script to add clauses into text area
+      document.getElementById("submitClauses").addEventListener("click", function () {
+        const clauses = [];
+        const appraisalGuarantee = document.getElementById("appraisalGuarantee");
+        const escalationClause = document.getElementById("escalationClause");
+        const offerDeadline = document.getElementById("offerDeadline");
+        
+        if (appraisalGuarantee.checked) clauses.push(appraisalGuarantee.value);
+        if (escalationClause.checked) clauses.push(escalationClause.value);
+        if (offerDeadline.checked) clauses.push(offerDeadline.value);
+        
+        const otherOfferRemarks = document.getElementById("otherOfferRemarks");
+        otherOfferRemarks.value += (otherOfferRemarks.value ? "\n" : "") + clauses.join("\n");
+        
+        // Close the modal
+        const clauseModal = new bootstrap.Modal(document.getElementById("clauseModal"));
+        clauseModal.hide();
+      });
+      // end of script to add clauses into text area
+
+      document.getElementById('propertyYearBuilt').addEventListener('change', function() {
+        let yearBuilt = parseInt(this.value, 10);
+        if (yearBuilt <= 1978) {
+          document.getElementById('leadPaintInspectionSection').classList.remove('d-none');
+        } else {
+          document.getElementById('leadPaintInspectionSection').classList.add('d-none');
+        }
+      });
+      // onchange="if (this.value <= 1978) { document.getElementById('leadPaintInspectionSection').classList.remove('d-none'); } else { document.getElementById('leadPaintInspectionSection').classList.add('d-none'); }"
+
+      document.getElementById("financingType").addEventListener("change", function () {
+        let selectedValue = this.value;
+        // Automatically check "Contingent on Financing" Yes if not 100% Cash
+        let financingContingencyYes = document.getElementById("radioYesFinancingContingency");
+        let financingContingencyNo = document.getElementById("radioNoFinancingContingency");
+        if (selectedValue !== "100% Cash") {
+          financingContingencyYes.checked = true;
+        } else {
+          financingContingencyYes.checked = false;
+          financingContingencyNo.checked = false;
+        }
+
+  // Hide all sections first
+      let allIdsToHide = [
+        "downPaymentSection",
+        "writtenStatementRequiredRadio",
+        "mortgageContingencySection",
+        "maxInterestRateSection",
+        "lenderProcessingFeeSection",
+        'vaFundingFeeSection'
+      ];
+
+      for (let id of allIdsToHide) {
+        document.getElementById(id).classList.add("d-none");
+      }
+      // Define sections to show for each financing type
+      let idsToShowConventional = [
+        "downPaymentSection",
+        "writtenStatementRequiredRadio",
+        "mortgageContingencySection",
+        "maxInterestRateSection",
+      ];
+      let idsToShowFha = [
+        "downPaymentSection",
+        "writtenStatementRequiredRadio",
+        "mortgageContingencySection",
+        "maxInterestRateSection",
+        "lenderProcessingFeeSection",
+      ];
+      let idsToShowVA = [
+        "downPaymentSection",
+        "writtenStatementRequiredRadio",
+        "mortgageContingencySection",
+        "maxInterestRateSection",
+        "lenderProcessingFeeSection",
+        "vaFundingFeeSection"
+      ];
+      let idsToShowUSDA = [
+        "downPaymentSection",
+        "writtenStatementRequiredRadio",
+        "mortgageContingencySection",
+        "maxInterestRateSection",
+      ];
+
+      // Show the appropriate sections based on selection
+      if (selectedValue === "Conventional") {
+        for (let id of idsToShowConventional) {
+          document.getElementById(id).classList.remove("d-none");
+        }
+      } else if (selectedValue === "FHA") {
+        for (let id of idsToShowFha) {
+          document.getElementById(id).classList.remove("d-none");
+        }
+      } else if (selectedValue === "VA") {
+        for (let id of idsToShowVA) {
+          document.getElementById(id).classList.remove("d-none");
+        }
+      } else if (selectedValue === "USDA") {
+        for (let id of idsToShowUSDA) {
+          document.getElementById(id).classList.remove("d-none");
+        }
+      }
+    });
+
+function radioToggle(id, toggleIndicator) {
+  var hiddenBlock = document.getElementById(id);
+  var yesRadio = document.getElementById(toggleIndicator);
+  if (yesRadio.checked) {
+    hiddenBlock.classList.remove("d-none");
+  } else {
+    hiddenBlock.classList.add("d-none");
+  }
+}
+</script>
+</body>
+</html>
